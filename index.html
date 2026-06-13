@@ -1,0 +1,602 @@
+<!DOCTYPE html>
+<html lang="pt">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ZNX - Marketplace de Angola</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+
+<body>
+  <div class="top-bar">
+    <div class="container">
+      <span>Angola - Entrega em todo o pais</span>
+      <span>App ZNX disponivel</span>
+    </div>
+  </div>
+
+  <header class="main-header">
+    <div class="container header-content">
+      <div class="logo" onclick="mostrarPagina('home')">
+        <h1>ZNX</h1>
+        <small>Angola</small>
+      </div>
+      <div class="search-bar">
+        <input type="text" id="searchInput" placeholder="Buscar produtos, marcas, vendedores..." onkeyup="buscarProdutos()">
+        <button onclick="buscarProdutos()"><i class="fas fa-search"></i></button>
+      </div>
+      <div class="header-actions">
+        <div class="action-item" onclick="mostrarPagina('carrinho')">
+          <i class="fas fa-shopping-cart"></i>
+          <span class="badge" id="cartCount">0</span>
+          <small>Carrinho</small>
+        </div>
+        <div class="action-item" onclick="mostrarPagina('favoritos')">
+          <i class="fas fa-heart"></i>
+          <small>Favoritos</small>
+        </div>
+        <div class="action-item" id="userMenu" onclick="toggleUserMenu()">
+          <i class="fas fa-user"></i>
+          <small id="userName">Entrar</small>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <nav class="category-nav">
+    <div class="container">
+      <a onclick="filtrarCategoria('todos')">Inicio</a>
+      <a onclick="filtrarCategoria('eletronicos')">Eletronicos</a>
+      <a onclick="filtrarCategoria('moda')">Moda</a>
+      <a onclick="filtrarCategoria('casa')">Casa</a>
+      <a onclick="filtrarCategoria('beleza')">Beleza</a>
+      <a onclick="filtrarCategoria('esportes')">Esportes</a>
+      <a onclick="filtrarCategoria('automoveis')">Automoveis</a>
+      <a onclick="filtrarCategoria('alimentos')">Alimentos</a>
+      <a onclick="mostrarPagina('vender')">Vender</a>
+      <a onclick="mostrarPagina('promocoes')">Codigos</a>
+    </div>
+  </nav>
+
+  <div class="user-dropdown" id="userDropdown">
+    <div class="dropdown-content">
+      <a onclick="mostrarPagina('login')"><i class="fas fa-sign-in-alt"></i> Entrar</a>
+      <a onclick="mostrarPagina('cadastro')"><i class="fas fa-user-plus"></i> Criar Conta</a>
+      <a onclick="mostrarPagina('minha-conta')"><i class="fas fa-user-circle"></i> Minha Conta</a>
+      <a onclick="mostrarPagina('meus-pedidos')"><i class="fas fa-box"></i> Meus Pedidos</a>
+      <a onclick="mostrarPagina('meus-produtos')"><i class="fas fa-store"></i> Minha Loja</a>
+      <a onclick="mostrarPagina('vender')"><i class="fas fa-plus-circle"></i> Vender Produto</a>
+      <a onclick="mostrarPagina('promocoes')"><i class="fas fa-ticket-alt"></i> Codigos de Promocao</a>
+      <a onclick="logout()"><i class="fas fa-sign-out-alt"></i> Sair</a>
+    </div>
+  </div>
+
+  <div id="page-home" class="page active">
+    <div class="hero-banner">
+      <div class="container">
+        <div class="hero-content">
+          <h2>O Maior Marketplace de Angola</h2>
+          <p>Compre e venda produtos de qualidade em todo o pais. Pagamento seguro com Kwanza (AOA).</p>
+          <button class="btn-primary" onclick="filtrarCategoria('todos')">Explorar Produtos</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="promo-banner" id="promoBanner" style="display:none;">
+      <div class="container">
+        <span id="promoText"></span>
+        <button onclick="mostrarPagina('promocoes')">Ver Codigos</button>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="container">
+        <h3 class="section-title">Categorias Populares</h3>
+        <div class="categories-grid">
+          <div class="category-card" onclick="filtrarCategoria('eletronicos')">
+            <div class="cat-icon"><i class="fas fa-mobile-alt"></i></div>
+            <span>Eletronicos</span>
+          </div>
+          <div class="category-card" onclick="filtrarCategoria('moda')">
+            <div class="cat-icon"><i class="fas fa-tshirt"></i></div>
+            <span>Moda</span>
+          </div>
+          <div class="category-card" onclick="filtrarCategoria('casa')">
+            <div class="cat-icon"><i class="fas fa-home"></i></div>
+            <span>Casa</span>
+          </div>
+          <div class="category-card" onclick="filtrarCategoria('beleza')">
+            <div class="cat-icon"><i class="fas fa-magic"></i></div>
+            <span>Beleza</span>
+          </div>
+          <div class="category-card" onclick="filtrarCategoria('esportes')">
+            <div class="cat-icon"><i class="fas fa-futbol"></i></div>
+            <span>Esportes</span>
+          </div>
+          <div class="category-card" onclick="filtrarCategoria('automoveis')">
+            <div class="cat-icon"><i class="fas fa-car"></i></div>
+            <span>Automoveis</span>
+          </div>
+          <div class="category-card" onclick="filtrarCategoria('alimentos')">
+            <div class="cat-icon"><i class="fas fa-utensils"></i></div>
+            <span>Alimentos</span>
+          </div>
+          <div class="category-card" onclick="filtrarCategoria('servicos')">
+            <div class="cat-icon"><i class="fas fa-wrench"></i></div>
+            <span>Servicos</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="container">
+        <h3 class="section-title">Produtos em Destaque</h3>
+        <div class="products-grid" id="produtosDestaque"></div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="container">
+        <h3 class="section-title">Lojas em Destaque</h3>
+        <div class="sellers-grid" id="lojasDestaque"></div>
+      </div>
+    </div>
+
+    <div class="section como-funciona">
+      <div class="container">
+        <h3 class="section-title">Como Funciona o ZNX</h3>
+        <div class="steps-grid">
+          <div class="step">
+            <div class="step-num">1</div>
+            <h4>Cadastre-se</h4>
+            <p>Crie sua conta gratuita em menos de 2 minutos</p>
+          </div>
+          <div class="step">
+            <div class="step-num">2</div>
+            <h4>Compre ou Venda</h4>
+            <p>Explore produtos ou abra sua propria loja virtual</p>
+          </div>
+          <div class="step">
+            <div class="step-num">3</div>
+            <h4>Pague com Seguranca</h4>
+            <p>Pagamento via transferencia bancaria, Multicaixa ou dinheiro na entrega</p>
+          </div>
+          <div class="step">
+            <div class="step-num">4</div>
+            <h4>Receba em Casa</h4>
+            <p>Entrega em Luanda, Benguela, Lubango e todo o pais</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="page-produtos" class="page">
+    <div class="container">
+      <div class="page-header">
+        <h2 id="tituloCategoria">Todos os Produtos</h2>
+        <div class="filtros">
+          <select id="ordenar" onchange="ordenarProdutos()">
+            <option value="relevancia">Relevancia</option>
+            <option value="preco-menor">Preco: Menor para Maior</option>
+            <option value="preco-maior">Preco: Maior para Menor</option>
+            <option value="novos">Mais Recentes</option>
+            <option value="avaliacao">Melhor Avaliacao</option>
+          </select>
+        </div>
+      </div>
+      <div class="products-grid" id="listaProdutos"></div>
+    </div>
+  </div>
+
+  <div id="page-produto" class="page">
+    <div class="container">
+      <div class="breadcrumb">
+        <a onclick="mostrarPagina('home')">Inicio</a> > <a onclick="mostrarPagina('produtos')">Produtos</a> > <span id="breadcrumbProduto">Detalhe</span>
+      </div>
+      <div class="product-detail" id="detalheProduto"></div>
+    </div>
+  </div>
+
+  <div id="page-carrinho" class="page">
+    <div class="container">
+      <h2>Meu Carrinho</h2>
+      <div class="cart-layout">
+        <div class="cart-items" id="itensCarrinho"></div>
+        <div class="cart-summary">
+          <h3>Resumo do Pedido</h3>
+          <div class="summary-row">
+            <span>Subtotal:</span>
+            <span id="subtotalCarrinho">Kz 0,00</span>
+          </div>
+          <div class="summary-row">
+            <span>Frete:</span>
+            <span id="freteCarrinho">Kz 0,00</span>
+          </div>
+          <div class="summary-row" id="descontoRow" style="display:none;">
+            <span>Desconto:</span>
+            <span id="descontoCarrinho" style="color:#28a745;">-Kz 0,00</span>
+          </div>
+          <div class="summary-row total">
+            <span>Total:</span>
+            <span id="totalCarrinho">Kz 0,00</span>
+          </div>
+          <div class="cupom-section">
+            <input type="text" id="cupomInput" placeholder="Codigo de promocao">
+            <button onclick="aplicarCupom()">Aplicar</button>
+          </div>
+          <p id="cupomMsg" style="font-size:0.85em; margin-top:5px;"></p>
+          <button class="btn-checkout" onclick="mostrarPagina('checkout')">Finalizar Compra</button>
+          <button class="btn-continuar" onclick="mostrarPagina('home')">Continuar Comprando</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="page-checkout" class="page">
+    <div class="container">
+      <h2>Finalizar Compra</h2>
+      <div class="checkout-layout">
+        <div class="checkout-form">
+          <div class="form-section">
+            <h3>Endereco de Entrega</h3>
+            <input type="text" id="nomeCompleto" placeholder="Nome Completo" required>
+            <input type="tel" id="telefoneEntrega" placeholder="Telefone (WhatsApp)" required>
+            <input type="text" id="endereco" placeholder="Endereco (Rua, Bairro)" required>
+            <input type="text" id="cidade" placeholder="Cidade" required>
+            <select id="provincia">
+              <option value="">Provincia</option>
+              <option>Luanda</option>
+              <option>Benguela</option>
+              <option>Huila</option>
+              <option>Huambo</option>
+              <option>Cabinda</option>
+              <option>Zaire</option>
+              <option>Uige</option>
+              <option>Bengo</option>
+              <option>Kwanza Norte</option>
+              <option>Kwanza Sul</option>
+              <option>Malanje</option>
+              <option>Lunda Norte</option>
+              <option>Lunda Sul</option>
+              <option>Moxico</option>
+              <option>Cunene</option>
+              <option>Cuando Cubango</option>
+              <option>Bie</option>
+              <option>Namibe</option>
+            </select>
+          </div>
+          <div class="form-section">
+            <h3>Metodo de Pagamento</h3>
+            <div class="payment-methods">
+              <label class="payment-option">
+                <input type="radio" name="pagamento" value="transferencia" checked>
+                <div class="payment-box">
+                  <i class="fas fa-university"></i>
+                  <span>Transferencia Bancaria</span>
+                  <small>BFA, BIC, Atlantico</small>
+                </div>
+              </label>
+              <label class="payment-option">
+                <input type="radio" name="pagamento" value="multicaixa">
+                <div class="payment-box">
+                  <i class="fas fa-credit-card"></i>
+                  <span>Multicaixa Express</span>
+                  <small>Pagamento via referencia</small>
+                </div>
+              </label>
+              <label class="payment-option">
+                <input type="radio" name="pagamento" value="entrega">
+                <div class="payment-box">
+                  <i class="fas fa-hand-holding-usd"></i>
+                  <span>Pagamento na Entrega</span>
+                  <small>Pague quando receber</small>
+                </div>
+              </label>
+              <label class="payment-option">
+                <input type="radio" name="pagamento" value="unitel">
+                <div class="payment-box">
+                  <i class="fas fa-mobile-alt"></i>
+                  <span>Unitel Money</span>
+                  <small>Pagamento via celular</small>
+                </div>
+              </label>
+            </div>
+          </div>
+        </div>
+        <div class="checkout-summary">
+          <h3>Resumo</h3>
+          <div id="resumoCheckout"></div>
+          <div class="total-final">
+            <span>Total a Pagar:</span>
+            <span id="totalCheckout">Kz 0,00</span>
+          </div>
+          <button class="btn-checkout" onclick="finalizarPedido()">Confirmar Pedido</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="page-login" class="page">
+    <div class="container">
+      <div class="auth-box">
+        <h2>Entrar na ZNX</h2>
+        <form onsubmit="login(event)">
+          <input type="email" id="loginEmail" placeholder="Email" required>
+          <input type="password" id="loginSenha" placeholder="Senha" required>
+          <button type="submit" class="btn-primary">Entrar</button>
+        </form>
+        <p>Nao tem conta? <a onclick="mostrarPagina('cadastro')">Criar conta</a></p>
+        <p><a onclick="mostrarPagina('cadastro-vendedor')">Quero vender produtos</a></p>
+      </div>
+    </div>
+  </div>
+
+  <div id="page-cadastro" class="page">
+    <div class="container">
+      <div class="auth-box">
+        <h2>Criar Conta</h2>
+        <form onsubmit="cadastrar(event, 'comprador')">
+          <input type="text" id="cadNome" placeholder="Nome Completo" required>
+          <input type="email" id="cadEmail" placeholder="Email" required>
+          <input type="tel" id="cadTelefone" placeholder="Telefone (WhatsApp)" required>
+          <input type="password" id="cadSenha" placeholder="Senha" required>
+          <input type="password" id="cadConfirmarSenha" placeholder="Confirmar Senha" required>
+          <button type="submit" class="btn-primary">Criar Conta</button>
+        </form>
+        <p>Ja tem conta? <a onclick="mostrarPagina('login')">Entrar</a></p>
+      </div>
+    </div>
+  </div>
+
+  <div id="page-cadastro-vendedor" class="page">
+    <div class="container">
+      <div class="auth-box">
+        <h2>Abrir Minha Loja</h2>
+        <form onsubmit="cadastrar(event, 'vendedor')">
+          <input type="text" id="venNome" placeholder="Seu Nome" required>
+          <input type="text" id="venLoja" placeholder="Nome da Loja" required>
+          <input type="email" id="venEmail" placeholder="Email" required>
+          <input type="tel" id="venTelefone" placeholder="Telefone" required>
+          <input type="text" id="venNif" placeholder="NIF / BI" required>
+          <input type="text" id="venEndereco" placeholder="Endereco da Loja" required>
+          <select id="venProvincia">
+            <option value="">Provincia</option>
+            <option>Luanda</option>
+            <option>Benguela</option>
+            <option>Huila</option>
+            <option>Huambo</option>
+            <option>Cabinda</option>
+            <option>Outra</option>
+          </select>
+          <input type="password" id="venSenha" placeholder="Senha" required>
+          <input type="password" id="venConfirmar" placeholder="Confirmar Senha" required>
+          <label class="checkbox-label">
+            <input type="checkbox" required> Aceito os termos e taxas de venda (5% por venda)
+          </label>
+          <button type="submit" class="btn-primary">Abrir Loja</button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <div id="page-vender" class="page">
+    <div class="container">
+      <h2>Publicar Produto</h2>
+      <div class="sell-form">
+        <form onsubmit="publicarProduto(event)">
+          <div class="form-group">
+            <label>Nome do Produto</label>
+            <input type="text" id="prodNome" placeholder="Ex: Samsung Galaxy A54" required>
+          </div>
+          <div class="form-group">
+            <label>Categoria</label>
+            <select id="prodCategoria" required>
+              <option value="">Escolher</option>
+              <option value="eletronicos">Eletronicos</option>
+              <option value="moda">Moda</option>
+              <option value="casa">Casa</option>
+              <option value="beleza">Beleza</option>
+              <option value="esportes">Esportes</option>
+              <option value="automoveis">Automoveis</option>
+              <option value="alimentos">Alimentos</option>
+              <option value="servicos">Servicos</option>
+            </select>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label>Preco (Kz)</label>
+              <input type="number" id="prodPreco" placeholder="Ex: 250000" required>
+            </div>
+            <div class="form-group">
+              <label>Preco Antigo (opcional)</label>
+              <input type="number" id="prodPrecoAntigo" placeholder="Ex: 300000">
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Descricao</label>
+            <textarea id="prodDescricao" rows="4" placeholder="Descreva o produto..." required></textarea>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label>Quantidade em Estoque</label>
+              <input type="number" id="prodEstoque" value="1" min="1" required>
+            </div>
+            <div class="form-group">
+              <label>Frete (Kz)</label>
+              <input type="number" id="prodFrete" value="5000" min="0">
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Imagens (URL ou descricao)</label>
+            <input type="text" id="prodImagem" placeholder="Cole o link da imagem ou descreva">
+            <small>Em producao, voce podera fazer upload de fotos</small>
+          </div>
+          <div class="form-group">
+            <label>Marca</label>
+            <input type="text" id="prodMarca" placeholder="Ex: Samsung, Nike, etc.">
+          </div>
+          <button type="submit" class="btn-primary">Publicar Produto</button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <div id="page-promocoes" class="page">
+    <div class="container">
+      <div class="promo-header">
+        <h2>Codigos de Promocao ZNX</h2>
+        <p>Use estes codigos para ganhar descontos exclusivos em suas compras!</p>
+      </div>
+      <div class="promo-section">
+        <h3>Codigos Ativos</h3>
+        <div class="promo-codes-grid" id="codigosAtivos"></div>
+      </div>
+      <div class="promo-section">
+        <h3>Como Usar</h3>
+        <div class="how-to-use">
+          <div class="use-step">
+            <div class="use-num">1</div>
+            <p>Copie o codigo de promocao</p>
+          </div>
+          <div class="use-step">
+            <div class="use-num">2</div>
+            <p>Adicione produtos ao carrinho</p>
+          </div>
+          <div class="use-step">
+            <div class="use-num">3</div>
+            <p>Cole o codigo no checkout</p>
+          </div>
+          <div class="use-step">
+            <div class="use-num">4</div>
+            <p>O desconto e aplicado automaticamente!</p>
+          </div>
+        </div>
+      </div>
+      <div class="promo-section">
+        <h3>Criar Codigo de Promocao (Vendedores)</h3>
+        <div class="create-promo">
+          <form onsubmit="criarCodigoPromo(event)">
+            <div class="form-row">
+              <div class="form-group">
+                <label>Codigo</label>
+                <input type="text" id="novoCodigo" placeholder="Ex: ZNX20" required>
+              </div>
+              <div class="form-group">
+                <label>Tipo de Desconto</label>
+                <select id="tipoDesconto">
+                  <option value="percentual">Percentual (%)</option>
+                  <option value="fixo">Valor Fixo (Kz)</option>
+                </select>
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label>Valor do Desconto</label>
+                <input type="number" id="valorDesconto" placeholder="Ex: 20 (para 20% ou Kz 20.000)" required>
+              </div>
+              <div class="form-group">
+                <label>Validade</label>
+                <input type="date" id="validadeCodigo" required>
+              </div>
+            </div>
+            <div class="form-group">
+              <label>Produtos Aplicaveis</label>
+              <select id="aplicacaoCodigo">
+                <option value="todos">Todos os produtos</option>
+                <option value="categoria">Categoria especifica</option>
+                <option value="loja">Minha loja apenas</option>
+              </select>
+            </div>
+            <button type="submit" class="btn-primary">Criar Codigo</button>
+          </form>
+        </div>
+      </div>
+      <div class="promo-section">
+        <h3>Meus Codigos Criados</h3>
+        <div id="meusCodigos"></div>
+      </div>
+    </div>
+  </div>
+
+  <div id="page-minha-conta" class="page">
+    <div class="container">
+      <h2>Minha Conta</h2>
+      <div class="account-layout">
+        <div class="account-sidebar">
+          <div class="account-menu">
+            <a onclick="mostrarPagina('meus-pedidos')"><i class="fas fa-box"></i> Meus Pedidos</a>
+            <a onclick="mostrarPagina('favoritos')"><i class="fas fa-heart"></i> Favoritos</a>
+            <a onclick="mostrarPagina('meus-produtos')"><i class="fas fa-store"></i> Minha Loja</a>
+            <a onclick="mostrarPagina('vender')"><i class="fas fa-plus-circle"></i> Vender</a>
+            <a onclick="mostrarPagina('promocoes')"><i class="fas fa-ticket-alt"></i> Codigos</a>
+            <a onclick="logout()"><i class="fas fa-sign-out-alt"></i> Sair</a>
+          </div>
+        </div>
+        <div class="account-content" id="perfilContent"></div>
+      </div>
+    </div>
+  </div>
+
+  <div id="page-meus-pedidos" class="page">
+    <div class="container">
+      <h2>Meus Pedidos</h2>
+      <div id="listaPedidos"></div>
+    </div>
+  </div>
+
+  <div id="page-meus-produtos" class="page">
+    <div class="container">
+      <h2>Minha Loja</h2>
+      <div class="store-header">
+        <button class="btn-primary" onclick="mostrarPagina('vender')">+ Novo Produto</button>
+        <button onclick="mostrarPagina('promocoes')">Codigos Promo</button>
+      </div>
+      <div id="minhaLojaProdutos"></div>
+    </div>
+  </div>
+
+  <div id="page-favoritos" class="page">
+    <div class="container">
+      <h2>Meus Favoritos</h2>
+      <div class="products-grid" id="listaFavoritos"></div>
+    </div>
+  </div>
+
+  <footer class="main-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div>
+          <h4>ZNX Angola</h4>
+          <p>O marketplace que conecta compradores e vendedores em todo o pais.</p>
+        </div>
+        <div>
+          <h4>Comprar</h4>
+          <a onclick="filtrarCategoria('eletronicos')">Eletronicos</a>
+          <a onclick="filtrarCategoria('moda')">Moda</a>
+          <a onclick="filtrarCategoria('casa')">Casa</a>
+        </div>
+        <div>
+          <h4>Vender</h4>
+          <a onclick="mostrarPagina('cadastro-vendedor')">Abrir Loja</a>
+          <a onclick="mostrarPagina('vender')">Publicar Produto</a>
+          <a onclick="mostrarPagina('promocoes')">Codigos Promo</a>
+        </div>
+        <div>
+          <h4>Ajuda</h4>
+          <a>Como Comprar</a>
+          <a>Como Vender</a>
+          <a>Entregas</a>
+          <a>Contacto</a>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>2026 ZNX Angola. Todos os direitos reservados.</p>
+      </div>
+    </div>
+  </footer>
+</body>
+
+</html>
